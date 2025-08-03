@@ -81,4 +81,22 @@ The example application is a social blogging site (i.e. a Medium.com clone) call
 
 ## API test (another project)
 - create a user for your testing
+```user name, email and password 
+shenyi
+shenyi@test.com
+test123!!
+```
 - Find API call ![FindAPICall](Readme/FindAPICall.png)
+
+## launch website
+- npm install
+- ng serve --open or ng serve --port 4201
+
+## claude sonnet 4 fixed legacy openSSL provider issue and create a localhost backend API
+Prompt: may I run api on localhost instead of conduit.productionready.io?
+Created realworld-backend
+cd realworld-backend
+npx nx@latest init
+patient to answer with "Continue", feel better than chatpgpt 4.1 (but waited for more than 15 mins)
+
+

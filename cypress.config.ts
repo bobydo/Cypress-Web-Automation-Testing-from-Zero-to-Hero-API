@@ -9,15 +9,15 @@ export default defineConfig({
     configFile: 'reporter-config.json',
   },
   env: {
-    username: 'cytest@test.com', 
-    password: 'Welcome123',
+    username: 'shenyi@test.com',
+    password: 'test123!!',
     apiUrl: 'https://api.realworld.io'
   },
   retries: {
     runMode: 2,
     openMode: 0
   },
-  
+
   e2e: {
     setupNodeEvents(on, config) {
       const username = process.env.DB_USERNAME
