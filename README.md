@@ -179,3 +179,16 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 - Compares current test runs against those baselines (snapshot comparison)
 - Highlights any visual differences
 - Uses AI/ML to reduce false positives from things like anti-aliasing or dynamic content
+
+
+## claude sonnet 4 fixed legacy openSSL provider issue and create a new backend API
+Prompt: may I run api on localhost instead of conduit.productionready.io?
+Created realworld-backend
+cd realworld-backend
+npx nx@latest init
+patient to answer with "Continue", feel better than chatpgpt 4.1
+
+## backemd test
+netstat -ano | findstr :3000
+JWT_SECRET in the .env file is "your-secret-key-here" but the auth middleware defaults to 'superSecret'
+cd "d:\newjob\Cypress-Web-Automation-Testing-from-Zero-to-Hero-API\realworld-backend\dist\out-tsc\src" ; node main.js
