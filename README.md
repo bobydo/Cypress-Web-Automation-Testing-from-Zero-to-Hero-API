@@ -99,4 +99,83 @@ cd realworld-backend
 npx nx@latest init
 patient to answer with "Continue", feel better than chatpgpt 4.1 (but waited for more than 15 mins)
 
+## environment
+https://docs.cypress.io/app/references/environment-variables
 
+## Test Retries
+https://docs.cypress.io/app/guides/test-retries
+
+## Continuous Integration with Cypress 
+- How to set up Cypress in Continuous Integration (CI)
+- How to run Cypress in CI, record tests, and run tests in parallel
+- How to set up CI workflows to use Cypress Docker images
+- Advanced configuration for OS, dependencies, caching, and environment variables
+https://docs.cypress.io/app/continuous-integration/overview?utm_source=chatgpt.com
+
+## cypress Login With OKTA
+Integrating Cypress tests with Okta login involves bypassing or simulating authentication since Okta uses redirects and cross-domain flows that are hard to test directly through UI in Cypress.
+Instead of using the UI login form, the best practice is to programmatically authenticate using Okta’s API or session cookie, then start your tests after login.
+```
+// cypress/support/commands.js
+Cypress.Commands.add('loginByOktaApi', () => {
+  const username = Cypress.env('okta_username');
+  const password = Cypress.env('okta_password');
+  const baseUrl = Cypress.env('okta_base_url'); // e.g., https://dev-123456.okta.com
+
+  cy.request({
+    method: 'POST',
+    url: `${baseUrl}/api/v1/authn`,
+    body: {
+      username,
+      password,
+      options: {
+        multiOptionalFactorEnroll: false,
+        warnBeforePasswordExpired: false,
+      }
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(({ body }) => {
+    const sessionToken = body.sessionToken;
+
+    cy.request({
+      method: 'GET',
+      url: `${baseUrl}/login/sessionCookieRedirect`,
+      qs: {
+        token: sessionToken,
+        redirectUrl: Cypress.config().baseUrl
+      },
+      followRedirect: false
+    }).then(({ headers }) => {
+      const redirectUrl = headers.location;
+
+      cy.visit(redirectUrl); // Now you're authenticated
+    });
+  });
+});
+```
+
+## Shadow DOM
+https://docs.cypress.io/api/commands/shadow
+```
+<div class="shadow-host">
+  #shadow-root
+  <button class="my-button">Click me</button>
+</div>
+// yields [#shadow-root (open)]
+cy.get('.shadow-host').shadow().find('.my-button').click()
+```
+
+## visual test
+- Applitools Visual Testing extension
+- Applitools is a visual testing platform designed to automatically catch visual bugs and UI regressions in web, mobile, and desktop applications. It's widely used in automated UI testing pipelines alongside tools like Cypress, Selenium, Playwright, and Appium.
+
+- 🧪 What Is Visual Testing?
+- Unlike functional tests (which verify how things work), visual tests verify how things look to the end user — across screen sizes, browsers, and devices.
+
+- 📸 How Applitools Works:
+- Takes screenshots of your application (baseline)
+- Compares current test runs against those baselines (snapshot comparison)
+- Highlights any visual differences
+- Uses AI/ML to reduce false positives from things like anti-aliasing or dynamic content
